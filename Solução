@@ -3,3 +3,43 @@ Solução Python Challenge 20211119 - Lucas do Carmo Tinoco
 
 # Inicialmente importei a livraria Pandas
 import pandas as pd
+
+# Fiz upload dos arquivos da Netflix e da Amazon 
+netflix= pd.read_csv("netflix_titles.csv")
+amazon = pd.read_csv("amazon_prime_titles.csv")
+
+# Concatenei ambos os dataframes da Netflx e da Amazon 
+total=pd.concat([netflix,amazon],ignore_index=True,sort=False)
+
+# A partir de agora é possível responder as perguntas do desafio
+
+# 1-Top 10 atores/atrizes considerando todos os dados:
+total.groupby('cast').size().sort_values(ascending=False)
+
+# 2- Top 5 países produtores de conteúdos considerando todos os dados e comparando as duas plataformas:
+netflix.groupby('country').size().sort_values(ascending=False)
+amazon.groupby('country').size().sort_values(ascending=False)
+total.groupby('country').size().sort_values(ascending=False)
+
+# 3- Mês no qual há mais adições de filmes na plataforma Netflix:
+netflix['date_added'] = netflix['date_added'].astype('datetime64[ns]')
+netflix['month']=netflix['date_added'].dt.month
+netflix.groupby('month').size()
+
+# 4- Quantidade de filmes listados como comédia:
+total[(total['listed_in']=='Comedies') & (total['type']=='Movie')].count()
+total[(total['listed_in']=='Comedy') & (total['type']=='Movie')].count()
+
+#5- Lista de todos os gêneros de filmes.
+total.groupby('listed_in').size() 
+
+#6- A frequência de "TV Show" de todos os dados e comparativamente em relação as duas plataformas
+total.groupby('type').size()
+netflix.groupby('type').size()
+amazon.groupby('type').size()
+
+#7- A frequência de "Movies" de todos os dados e comparativamente em relação as duas plataformas
+total.groupby('type').size()
+netflix.groupby('type').size()
+amazon.groupby('type').size()
+
