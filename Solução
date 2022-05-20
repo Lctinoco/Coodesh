@@ -1,0 +1,5 @@
+Solução Python Challenge 20211119 - Lucas do Carmo Tinoco
+- Python 
+
+# Inicialmente importei a livraria Pandas
+import pandas as pd
